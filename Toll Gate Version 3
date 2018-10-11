@@ -1,0 +1,100 @@
+class Vehicle:  # create the class called vehicle
+    def __init__(self,vehicleType):  # initialize the class vehicle
+        self.vehicleType = vehicleType
+
+class Tollgate:  # create the class called Tollgate
+
+    def __init__(self, location, carFee, busFee, truckFee):
+        self.location = location
+        self.carFee = carFee
+        self.busFee = busFee
+        self.truckFee = truckFee
+        self.carTotal = 0  # initialize the value for carTotal = 0
+        self.busTotal = 0  # initialize the value for busTotal = 0
+        self.truckTotal = 0  # initialize the value for truckTotal = 0
+
+    def getLocation(self):  # create a function to get the location of the toll gate
+        return self.location
+
+# we use numbers because it corresponds with the user input later on
+
+    def getFee(self, vType):   # create a function to get the fee
+        if vType.lower() == '1':   # if the vehicle type is car, it will return the car fee
+            return self.carFee
+        elif vType.lower() == '2':  # if the vehicle type is bus, it will return the bus fee
+            return self.busFee
+        elif vType.lower() == '3':  # if the vehicle type is truck, it will return the truck fee
+            return self.truckFee
+
+# we use numbers because it corresponds with the user input later on
+
+    def addVehicle(self, vehicleType):  # create a function to add vehicle according to the type
+        if vehicleType == '1':
+            self.carTotal += 1  # it will add 1 to the carTotal that was previously initialized from 0
+        elif vehicleType == '2':
+            self.busTotal += 1  # it will add 1 to the busTotal that was previously initialized from 0
+        elif vehicleType == '3':
+            self.truckTotal += 1  # it will add 1 to the truckTotal that was previously initialized from 0
+
+    def getCarTotal(self):   # getting individual vehicle type total, this is getting the car total
+        return self.carTotal
+
+    def getBusTotal(self):  # getting the bus total
+        return self.busTotal
+
+    def getTruckTotal(self):  # getting the truck total
+        return self.truckTotal
+
+class Tolloperator:  # create the class called Tolloperator
+    gates = []  # initialize the list called gates
+
+    def addGate(self, location, carFee, busFee, truckFee):  # add a new gate with different fees for different vehicle types and location
+        self.gates.append(Tollgate(location, carFee, busFee, truckFee))
+
+    def getGate(self, id):  # getting the gate id as an index in the list
+        return self.gates[id]
+
+    def getGateID(self, gatename):
+        if len(self.gates) > 0:  # when there is variable in the list
+            for i in range(0, len(self.gates)):  # for i in the range of the length of the list
+                if self.gates[i].location.lower() == gatename.lower():  # if the gate in the list in the certain index in lower letters is the same as the name of the gate
+                    return i  # return the index value
+
+def revenue(gate):
+        print('Location of Toll gate: {}'.format(gate.getLocation()))  # prints the location
+        print('----------------------------------')
+        print('     Car      Bus       Truck')
+        print('----------------------------------')
+        print('     {}        {}         {}'.format(gate.getCarTotal(), gate.getBusTotal(), gate.getTruckTotal()))  # prints the total of each vehicle type
+        print('----------------------------------')
+        revenue = gate.getCarTotal()*gate.getFee('1') + gate.getBusTotal()*gate.getFee('2') + gate.getTruckTotal()*gate.getFee('3')  # calculates the revenue
+        print('Total revenue: Rp {}'.format(revenue))  # prints out the value of the revenue
+
+
+operator = Tolloperator()  # assign the class Tolloperator to a variable 'operator'
+def main():  # create the main function
+    operator.addGate('Meruya', 6000 ,8000 ,10000)  # add the gate to the Tolloperator with the operation and different fees for the different vehicle type
+    operator.addGate('Pondok Aren', 18000, 20000, 25000)  # add the gate to the Tolloperator with the operation and different fees for the different vehicle type
+    locInput = input("Which Gate: ")  # user inputs the location of the gate
+    gate = operator.getGate(operator.getGateID(locInput))  #
+    while True:  # creates a loop
+        print('=============================================================')
+        print('                     Toll Payment Systems')
+        print('                      PT Jasa Marga, Tbk.')
+        print('=============================================================')
+        print('Location of Toll Gate: {}'.format(gate.location))  # prints the location of the gate as the user inputs
+        inpVehc = input('Category of vehicle:\n1. Car\n2. Bus\n3. Truck\nChoice: ')  # user inputs what the user wants to do
+        print('Fee: {}'.format(gate.getFee(inpVehc)))  # prints out the fee depending on the input vehicle
+        gate.addVehicle(inpVehc)  # every vehicle that passes, it will call the function addVehicle according to the input vehicle
+        anyOtherVehicle = input('Is there any other vehicles (Y/N):\n')  # every user input, user will be asked if there any other vehicles
+        if anyOtherVehicle.upper() == 'N':  # if the user input N (NO)
+            anyOtherLocation = input('Is there any other Toll gate location (Y/N): \n')  # then user will be asked if there are any other toll gate locations
+            if anyOtherLocation.upper() == 'N':  # if the user inputs N (NO)
+                revenue(operator.gates[0])  # calling the class revenue with the different locations according to the gate index
+                revenue(operator.gates[1])  # calling the class revenue with the different locations according to the gate index
+                quit()  # after calling the function revenue, it will quit from the system
+            else:
+                locInput = input("Which Gate: ")  # if the user input Y (YES) it will loop again by asking the location of the gate
+                gate = operator.getGate(operator.getGateID(locInput))  # will call the function based on the location input
+
+main()  # calling the function main
