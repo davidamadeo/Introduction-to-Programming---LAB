@@ -1,0 +1,52 @@
+class Vehicle:  # make a class called vehicle
+    def __init__(self, vehicleType):  # initialize the class
+        self.vehicleType = vehicleType
+
+
+class Tollgate:  # make a clase called Tollgate
+    def __init__(self, carFee, busFee, truckFee):
+        self.carFee = carFee
+        self.busFee = busFee
+        self.truckFee = truckFee
+
+    def getFee(self, vehicleType):  # make a function to get the fee
+        vehicleType.lower()  # any input will be lower case letters
+        if vehicleType == 'car':  # if the vehicle type is car, it will return the car fee
+            return self.carFee
+        elif vehicleType == 'bus':  # if the vehicle type is bus, it will return the bus fee
+            return self.busFee
+        elif vehicleType == 'truck':  # if the vehicle type is truck, it will return the truck fee
+            return self.truckFee
+
+    def getCarFee(self):  # getting individual vehicle type fee, this is getting the car fee
+        return self.carFee
+
+    def getBusFee(self):  # getting the bus fee
+        return self.busFee
+
+    def getTruckFee(self):  # getting the truck fee
+        return self.truckFee
+
+
+operator = Tollgate(6000, 8000, 10000)  # assign Tollgate with the different fees in the parameter to operator
+
+
+def main():  # the main function
+    while True:
+        print('=============================================================')
+        print('                     Toll Payment Systems')
+        print('                      PT Jasa Marga, Tbk.')
+        print('=============================================================')
+        usrInput = input('Category of vehicle:\n1. Car\n2. Bus\n3. Truck\nChoice: ')  # user inputs what the user wants to do
+        if usrInput == '1':  # if the user input chooses 1
+            print('Fee: {}'.format(operator.carFee))  # it will print out the value of the car fee
+        elif usrInput == '2':
+            print('Fee: {}'.format(operator.busFee))  # it will print out the value of the bus fee
+        elif usrInput == '3':
+            print('Fee: {}'.format(operator.truckFee))  # it will print out the value of the truck fee
+        anyOtherVehicle = input('Is there any other vehicles (Y/N):\n')  # every user input, user will be asked if there any other vehicles
+        if anyOtherVehicle.upper() == 'N':  # if the user inputs N (NO)
+            quit()  # it will end the whole function and quits from the whole system
+
+
+main()  # calling the function main
