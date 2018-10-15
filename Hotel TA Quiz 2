@@ -1,0 +1,193 @@
+class Desk():  # create a class called desk
+    def __init__(self):  # initialize self
+        self.roomSingle = ['', '', '']  # initialize there are 3 rooms
+        self.roomDouble = ['', '', '']
+        self.roomSuite = ['', '', '']
+        self.listCustomer = ['', '', '', '', '', '', '', '', '']  # initialize there can be 9 customers
+        self.stayDuration = ['', '', '', '', '', '', '', '', '']  # initialize there can be 9 durations
+        self.singelRoomType = ['', '', '', '', '', '', '', '', '']
+        self.doubleRoomType = ['', '', '', '', '', '', '', '', '']
+        self.suiteRoomType = ['', '', '', '', '', '', '', '', '']
+        self.singleFee = 10  # initialize the fee of each rooms
+        self.doubleFee = 20
+        self.suiteFee = 50
+        self.revenue = 0
+
+    def checkRevenue(self):
+        print('Revenue: {}'.format(self.revenue))  # print out the revenue
+
+    def checkRoom(self):
+        usrInput1 = input('1.Single\n2.Double\n3.Suite\n')  # user inputs the room rype
+
+        if usrInput1 == '1':  # checking each room
+            print('Single Room: {}'.format(self.roomSingle))
+        elif usrInput1 == '2':
+            print('Double Room: {}'.format(self.roomDouble))
+        elif usrInput1 == '3':
+            print('Suite Room: {}'.format(self.roomSuite))
+
+
+class Customer(Desk):  # create a class called customer
+
+    def checkIn(self):  # create a function to check in
+        customerName = input('Name: ')  # user inputs the name
+        duration = int(input('Duration of stay: '))  # user inputs the duration of stay
+        usrInput2 = input('1.Single\n2.Double\n3.Suite\n')
+
+        if usrInput2 == '1':
+            if self.roomSingle[2] != '':  # if the last index is filled, the rooms are full
+                print('\nRoom Full\n')
+            elif self.roomSingle[0] == '':  # if the index targeted is empty, execute
+                self.roomSingle[0] = customerName  # adds customer name in the room list
+                self.listCustomer[0] = customerName  # adds customer name to the customer list
+                self.stayDuration[0] = duration  # adds the duration value in the duration list
+                self.singleRoomType[0] = 'Single'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'  # prints the details
+                      .format(customerName, self.roomSingle.index(customerName), self.singelRoomType[0], duration))
+            elif self.roomSingle[1] == '':
+                self.roomSingle[1] = customerName
+                self.listCustomer[1] = customerName
+                self.stayDuration[1] = duration
+                self.singleRoomType[1] = 'Single'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomSingle.index(customerName), self.singelRoomType[1], duration))
+            elif self.roomSingle[2] == '':
+                self.roomSingle[2] = customerName
+                self.listCustomer[2] = customerName
+                self.stayDuration[2] = duration
+                self.singleRoomType[2] = 'Single'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomSingle.index(customerName), self.singelRoomType[2], duration))
+
+        if usrInput2 == '2':
+            if self.roomDouble[2] != '':
+                print('\nRoom Full\n')
+            elif self.roomDouble[0] == '':
+                self.roomDeluxe[0] = customerName
+                self.listCustomer[3] = customerName
+                self.stayDuration[3] = duration
+                self.doubleRoomType[0] = 'Double'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomDouble.index(customerName), self.doubleRoomType[0], duration))
+            elif self.roomDouble[1] == '':
+                self.roomDeluxe[1] = customerName
+                self.listCustomer[4] = customerName
+                self.stayDuration[4] = duration
+                self.doubleRoomType[1] = 'Double'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomDouble.index(customerName), self.doubleRoomType[1], duration))
+            elif self.roomDouble[2] == '':
+                self.roomDeluxe[2] = customerName
+                self.listCustomer[5] = customerName
+                self.stayDuration[5] = duration
+                self.doubleRoomType[2] = 'Double'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomDouble.index(customerName), self.doubleRoomType[2], duration))
+
+        if usrInput2 == '3':
+            if self.roomSuite[2] != '':
+                print('\nRoom Full\n')
+            elif self.roomSuite[0] == '':
+                self.roomSuite[0] = customerName
+                self.listCustomer[6] = customerName
+                self.stayDuration[6] = duration
+                self.suiteRoomType[0] = 'Suite'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomSuite.index(customerName), self.suiteRoomType[0], duration))
+            elif self.roomSuite[1] == '':
+                self.roomSuite[1] = customerName
+                self.listCustomer[7] = customerName
+                self.stayDuration[7] = duration
+                self.suiteRoomType[1] = 'Suite'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomSuite.index(customerName), self.suiteRoomType[1], duration))
+            elif self.roomSuite[2] == '':
+                self.roomSuite[2] = customerName
+                self.listCustomer[8] = customerName
+                self.stayDuration[8] = duration
+                self.suiteRoomType[2] = 'Suite'
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}'
+                      .format(customerName, self.roomSuite.index(customerName), self.suiteRoomType[2], duration))
+
+    def checkOut(self):  # create a function to check out
+        customerRoom = int(input('Room Number:\n'))  # user inputs the room number
+        usrInput3 = input('1.Single\n2.Double\n3.Suite\n')
+        if usrInput3 == '1':
+            if self.roomSingle[customerRoom] != '':  # if the room in the targetted room number is not empty
+                self.roomSingle[customerRoom] = ''  # make it empty to check out
+            elif customerRoom == 0:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[0], str(customerRoom), self.singelRoomType[0], self.stayDuration[0],
+                              self.singleFee * self.stayDuration[0]))  # prints the details
+                self.revenue += self.priceSingle * self.stayDuration[0]  # prints the price and adds it to the revenue
+            elif customerRoom == 1:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[1], str(customerRoom), self.singelRoomType[1], self.stayDuration[1],
+                              self.singleFee * self.stayDuration[1]))
+                self.revenue += self.priceSingle * self.stayDuration[1]
+            elif customerRoom == 2:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[2], str(customerRoom), self.singelRoomType[2], self.stayDuration[2],
+                              self.singleFee * self.stayDuration[2]))
+                self.revenue += self.priceSingle * self.stayDuration[2]
+        elif usrInput3 == '2':
+            total = customerRoom - 3 
+            if self.roomDouble[total] != '':
+                self.roomDouble[total] = ''
+            elif customerRoom == 3:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[3], str(customerRoom), self.doubleRoomType[0], self.stayDuration[3],
+                              self.doubleFee * self.stayDuration[3]))
+                self.revenue += self.priceDouble * self.stayDuration[3]
+            elif customerRoom == 4:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[4], str(customerRoom), self.doubleRoomType[1], self.stayDuration[4],
+                              self.doubleFee * self.stayDuration[4]))
+                self.revenue += self.priceDouble * self.stayDuration[4]
+            elif customerRoom == 5:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[5], str(customerRoom), self.doubleRoomType[2], self.stayDuration[5],
+                              self.doubleFee * self.stayDuration[5]))
+                self.revenue += self.priceDouble * self.stayDuration[5]
+
+        elif usrInput3 == '3':
+            total = customerRoom - 6
+            if self.roomSuite[total] != '':
+                self.roomSuite[total] = ''
+            elif customerRoom == 6:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[6], str(customerRoom), self.suiteRoomType[0], self.stayDuration[6],
+                              self.doubleFee * self.stayDuration[6]))
+                self.revenue += self.priceSuite * self.stayDuration[6]
+            elif customerRoom == 7:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[7], str(customerRoom), self.suiteRoomType[1], self.stayDuration[7],
+                              self.doubleFee * self.stayDuration[7]))
+                self.revenue += self.priceSuite * self.stayDuration[7]
+            elif customerRoom == 8:
+                print('Customer Name: {}\nRoom Number: {}\nRoom Type: {}\nDuration: {}\nPrice: {}'
+                      .format(self.listCustomer[8], str(customerRoom), self.suiteRoomType[2], self.stayDuration[8],
+                              self.doubleFee * self.stayDuration[8]))
+                self.revenue += self.priceSuite * self.stayDuration[8]
+
+
+customer = Customer()
+
+
+def main():
+
+    while True:  # creates a loop
+        usrInput4 = input('1.Check In\n2.Check Out\n3.Check room\n4.Check Revenue\n')  # user inputs the action
+
+        if usrInput4 == '1':  # if user inputs '1'
+            customer.checkIn()  # call the function check in from customer
+        elif usrInput4 == '2':
+            customer.checkOut()
+        elif usrInput4 == '3':
+            customer.checkRoom()
+        elif usrInput4 == '4':
+            customer.checkRevenue()
+        else:
+            print('Invalid')  # if user inputs other from 1 2 3 4, it will print invalid input
+
+main()
