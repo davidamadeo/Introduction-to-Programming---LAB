@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pylab as plt
+import math as math
+
+v = []
+a = []
+
+usrInput = int(input('Amount of projections:'))
+for i in range(0, usrInput):
+    v.append(int(input('Velocity: ')))
+    a.append(int(input('Angle: ')))
+g = 9.8
+
+for i in range(0, usrInput):
+    tMax = int(2 * (v[i] * math.sin(np.radians(a[i]))/g))
+    division = np.linspace(0, tMax, num=100000)
+    xAxis = []
+    yAxis = []
+    for k in division:
+        x = ((v[i] * k) * np.cos(np.radians(a[i])))
+        y = ((v[i] * k) * np.sin(np.radians(a[i]))) - ((0.5 * g) * (k ** 2))
+        xAxis.append(x)
+        yAxis.append(y)
+    plt.title('Projectile Motion')
+    plt.xlabel('x-coordinate')
+    plt.ylabel('y-coordinate')
+    plt.plot(xAxis, yAxis)
+
+plt.show()
