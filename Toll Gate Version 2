@@ -65,6 +65,7 @@ def main():  # the main function
         print('                      PT Jasa Marga, Tbk.')
         print('=============================================================')
         usrInput = input('Category of vehicle:\n1. Car\n2. Bus\n3. Truck\nChoice: ')  # user inputs what the user wants to do
+        
         if usrInput == '1':  # if the user input chooses 1
             print('Fee: {}'.format(operator.carFee))  # it will print out the value of the car fee
             operator.addVehicle('car')  # it will call the function addVehicle for the car vehicle type
@@ -74,4 +75,7 @@ def main():  # the main function
         elif usrInput == '3':
             print('Fee: {}'.format(operator.truckFee))  # it will print out the value of the truck fee
             operator.addVehicle('truck')  # it will call the function addVehicle for the truck vehicle type
+            
         anyOtherVehicle = input('Is there any other vehicles (Y/N):\n')  # every user input, user will be asked if there any other vehicles
+
+main()  # call the function
