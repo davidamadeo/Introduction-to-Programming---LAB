@@ -75,20 +75,26 @@ operator = Tolloperator()  # assign the class Tolloperator to a variable 'operat
 def main():  # create the main function
     operator.addGate('Meruya', 6000 ,8000 ,10000)  # add the gate to the Tolloperator with the operation and different fees for the different vehicle type
     operator.addGate('Pondok Aren', 18000, 20000, 25000)  # add the gate to the Tolloperator with the operation and different fees for the different vehicle type
+    
     locInput = input("Which Gate: ")  # user inputs the location of the gate
-    gate = operator.getGate(operator.getGateID(locInput))  #
+    gate = operator.getGate(operator.getGateID(locInput))  # assign the gate
+    
     while True:  # creates a loop
         print('=============================================================')
         print('                     Toll Payment Systems')
         print('                      PT Jasa Marga, Tbk.')
         print('=============================================================')
         print('Location of Toll Gate: {}'.format(gate.location))  # prints the location of the gate as the user inputs
+        
         inpVehc = input('Category of vehicle:\n1. Car\n2. Bus\n3. Truck\nChoice: ')  # user inputs what the user wants to do
         print('Fee: {}'.format(gate.getFee(inpVehc)))  # prints out the fee depending on the input vehicle
+        
         gate.addVehicle(inpVehc)  # every vehicle that passes, it will call the function addVehicle according to the input vehicle
         anyOtherVehicle = input('Is there any other vehicles (Y/N):\n')  # every user input, user will be asked if there any other vehicles
+        
         if anyOtherVehicle.upper() == 'N':  # if the user input N (NO)
             anyOtherLocation = input('Is there any other Toll gate location (Y/N): \n')  # then user will be asked if there are any other toll gate locations
+            
             if anyOtherLocation.upper() == 'N':  # if the user inputs N (NO)
                 revenue(operator.gates[0])  # calling the class revenue with the different locations according to the gate index
                 revenue(operator.gates[1])  # calling the class revenue with the different locations according to the gate index
