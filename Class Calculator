@@ -1,0 +1,43 @@
+class Calculator:
+    def __init__(self, op1, op2, operand):  # initialize class
+        self.op1 = int(op1)
+        self.op2 = int(op2)
+        self.operand = operand
+
+    def multiply(self, op1, op2):
+        return op1*op2   # function to multiply
+
+    def divide(self, op1, op2):
+        return op1/op2   # function to divide
+
+    def add(self, op1, op2):
+        return op1+op2   # function to add
+
+    def substract(self, op1, op2):
+        return op1+op2   # function to subtract
+
+    # a function to count the initialized operands with the initialized operators.
+    def count(self):
+        if self.operand == '*':  # multiplication
+            return self.multiply(self.op1, self.op2)
+        elif self.operand == '/':  # division
+            return self.divide(self.op1, self.op2)
+        elif self.operand == '+':  # addition
+            return self.add(self.op1, self.op2)
+        elif self.operand == '-':  # subtraction
+            return self.substract(self.op1, self.op2)
+
+
+def main():  # main function
+    print("Enter infix math syntax.\nExample: 5 * 2 ")
+    while True:
+        usrInput = input("Enter number here (leave blank to quit):\n >")
+        if usrInput == "":
+            quit()      # if user inputs nothing, quit.
+        else:
+            stackInput = usrInput.split(' ')  # split the operands and operators into a list
+            newCalc = calculator(stackInput[0], stackInput[2], stackInput[1])  # initialize the calculator
+            print(newCalc.count())  # print result
+
+
+main()  # call the main function
