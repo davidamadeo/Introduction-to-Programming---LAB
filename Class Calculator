@@ -14,7 +14,7 @@ class Calculator:
         return op1+op2   # function to add
 
     def substract(self, op1, op2):
-        return op1+op2   # function to subtract
+        return op1-op2   # function to subtract
 
     # a function to count the initialized operands with the initialized operators.
     def count(self):
@@ -31,11 +31,13 @@ class Calculator:
 def main():  # main function
     while True:
         usrInput = input('Enter infix syntax (leave blank to quit):\n ')
-        if usrInput == "":
+        if usrInput == '':
             quit()      # if user inputs nothing, quit.
         else:
             stackInput = usrInput.split(' ')  # split the operands and operators into a list
-            newCalc = calculator(stackInput[0], stackInput[2], stackInput[1])  # initialize the calculator
+
+            newCalc = Calculator(stackInput[0], stackInput[2], stackInput[1])  # initialize the calculator
+
             print(newCalc.count())  # print result
 
 
