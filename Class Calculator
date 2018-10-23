@@ -29,9 +29,9 @@ class Calculator:
 
 
 def main():  # main function
-    print("Enter infix math syntax.\nExample: 5 * 2 ")
+    print('Enter infix math syntax')
     while True:
-        usrInput = input("Enter number here (leave blank to quit):\n >")
+        usrInput = input('Enter number here (leave blank to quit):\n ')
         if usrInput == "":
             quit()      # if user inputs nothing, quit.
         else:
