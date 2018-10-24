@@ -1,0 +1,21 @@
+class Holder:
+    def __int__(self, name, startBal=0):
+        self.name = name
+        self.balance = float(startBal)
+
+    def deduct(self, num):
+        self.balance -= float(num)
+
+    def add(self, num):
+        self.balance += float(num)
+
+flazz = Holder['Flazz', 10]
+
+allHolder = [flazz]
+currentHolder = 0
+holderInput = input('Holder: ')
+
+for i in range(len(allHolder)):
+    if allHolder[i].name == holderInput:
+        currentHolder = i
+        print(i)
