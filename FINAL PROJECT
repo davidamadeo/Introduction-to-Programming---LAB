@@ -1,5 +1,11 @@
+from matplotlib import pyplot as plt
+import csv
+from datetime import datetime as dt
+from datetime import timedelta
+
+
 class Holder:
-    def __int__(self, name, startBal=0):
+    def __init__(self, name, startBal=0.0):
         self.name = name
         self.balance = float(startBal)
 
@@ -9,13 +15,109 @@ class Holder:
     def add(self, num):
         self.balance += float(num)
 
-flazz = Holder['Flazz', 10]
 
-allHolder = [flazz]
-currentHolder = 0
-holderInput = input('Holder: ')
+class Loan:
+    def __init__(self, principle, termLoan):
+        self.principle = principle
+        self.startingDate = dt.strptime(dt.strftime(dt.now(), '%Y-%m-%d'), '%Y-%m-%d')
+        self.termLoan = int(termLoan)
+        self.maturityDate = self.startingDate + timedelta(days=termLoan)
+        # self.interestRate = interest
+        # self.faceValue = faceValue
+        # self.nominalYield = (self.interestRate / self.faceValue) * 100
 
-for i in range(len(allHolder)):
-    if allHolder[i].name == holderInput:
-        currentHolder = i
-        print(i)
+
+allHolder = []
+allLoan = []
+
+
+def printHolderList():
+    for i in range(len(allHolder)):
+        print(i + 1, allHolder[i].name, allHolder[i].balance)
+
+
+def loadHolder():
+    filename = 'holders.csv'
+    with open(filename) as file:
+        reader = csv.reader(file)
+        header_row = next(reader)
+        for row in reader:
+            allHolder.append(Holder(row[0], row[1]))
+
+
+def makePlot(x, y):
+    plt.figure(dpi=100, figsize=(12, 6))
+    plt.bar(x, y, width=1, color='red ', edgecolor='yellow')
+    plt.title('Balance', fontsize=24)
+    plt.tick_params(labelsize=8)
+    plt.show()
+
+
+def main():
+    loadHolder()
+    while True:
+        firstInput = input('''What do you want to do? 
+        1. Add Holder 2. View Holders 3. Deposit 4. Withdraw 5. Add loan 6. View Loans 9. Delete Holder 0. Quit\n>''')
+        if firstInput == '1':
+            holderNameInput = input('Enter Holder name: ')
+            startBalInput = float(input('Enter starting balance: '))
+            allHolder.append(Holder(holderNameInput, startBalInput))
+        elif firstInput == '2':
+            printHolderList()
+        elif firstInput == '3':
+            screen3Run = True
+            while screen3Run:
+                print('Choose account')
+                printHolderList()
+                chooseHolderInput = input('> ')
+                for i in range(len(allHolder)):
+                    if int(chooseHolderInput) - 1 in range(len(allHolder)):
+                        workingHolder = allHolder[int(chooseHolderInput) - 1]
+                        numInput = float(input('Amount: '))
+                        workingHolder.add(numInput)
+                        print('Balance: {}'.format(workingHolder.balance))
+                        screen3Run = False
+                        break
+        elif firstInput == '4':
+            screen4Run = True
+            while screen4Run:
+                print('Choose account')
+                printHolderList()
+                chooseHolderInput = input('> ')
+                for i in range(len(allHolder)):
+                    if int(chooseHolderInput) - 1 in range(len(allHolder)):
+                        workingHolder = allHolder[int(chooseHolderInput) - 1]
+                        numInput = float(input('Amount: '))
+                        workingHolder.deduct(numInput)
+                        print('Balance: {}'.format(workingHolder.balance))
+                        screen4Run = False
+                        break
+        elif firstInput == '5':
+            principleInput = input('Principle: ')
+            termLoadInput = int(input('Term of loan: '))
+            allLoan.append(Loan(principleInput, termLoadInput))
+        elif firstInput == '9':
+            screen8Run = True
+            while screen8Run:
+                printHolderList()
+                delHolderInput = int(input('Holder\n>'))
+                if delHolderInput - 1 in range(len(allHolder)):
+                    del allHolder[delHolderInput - 1]
+                    screen8Run = False
+        elif firstInput == '0':
+            writefile1 = 'holders.csv'
+            with open(writefile1, 'w') as file1:
+                writer = csv.writer(file1)
+                writer.writerow(['name', 'balance'])
+                for i in range(len(allHolder)):
+                    writer.writerow([allHolder[i].name, allHolder[i].balance])
+            name, bal = [], []
+            for i in range(len(allHolder)):
+                name.append(allHolder[i].name)
+                bal.append(allHolder[i].balance)
+            makePlot(name, bal)
+            exit()
+
+
+main()
+# loans ->
