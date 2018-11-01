@@ -47,7 +47,7 @@ def loadHolder():
 
 def makePlot(x, y):
     plt.figure(dpi=100, figsize=(12, 6))
-    plt.bar(x, y, width=1, color='red ', edgecolor='yellow')
+    plt.bar(x, y, width=1, color='red', edgecolor='yellow')
     plt.title('Balance', fontsize=24)
     plt.tick_params(labelsize=8)
     plt.show()
@@ -94,8 +94,9 @@ def main():
                         break
         elif firstInput == '5':
             principleInput = input('Principle: ')
-            termLoadInput = int(input('Term of loan: '))
+            termLoadInput = int(input('Term of loan'))
             allLoan.append(Loan(principleInput, termLoadInput))
+            print(allLoan)
         elif firstInput == '9':
             screen8Run = True
             while screen8Run:
@@ -120,4 +121,3 @@ def main():
 
 
 main()
-# loans ->
