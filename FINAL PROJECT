@@ -17,14 +17,15 @@ class Holder:
 
 
 class Loan:
-    def __init__(self, principle, termLoan):
+    def __init__(self, principle, termLoan, interest, interestAmount, faceValue):
         self.principle = principle
         self.startingDate = dt.strptime(dt.strftime(dt.now(), '%Y-%m-%d'), '%Y-%m-%d')
         self.termLoan = int(termLoan)
         self.maturityDate = self.startingDate + timedelta(days=termLoan)
-        # self.interestRate = interest
-        # self.faceValue = faceValue
-        # self.nominalYield = (self.interestRate / self.faceValue) * 100
+        self.interestName = interest
+        self.interestRate = interestAmount
+        self.faceValue = faceValue
+        self.nominalYield = (self.interestRate / self.faceValue) * 100
 
 
 allHolder = []
@@ -36,6 +37,11 @@ def printHolderList():
         print(i + 1, allHolder[i].name, allHolder[i].balance)
 
 
+def printLoanList():
+    for i in range(len(allLoan)):
+        print(i + 1, allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate, allLoan[i].interest, allLoan[i].interestAmount, allLoan[i].faceValue, allLoan[i].nominalYield)
+
+
 def loadHolder():
     filename = 'holders.csv'
     with open(filename) as file:
@@ -43,6 +49,31 @@ def loadHolder():
         header_row = next(reader)
         for row in reader:
             allHolder.append(Holder(row[0], row[1]))
+
+
+def writeHolder():
+    writefile1 = 'holders.csv'
+    with open(writefile1, 'w') as file1:
+        writer = csv.writer(file1)
+        writer.writerow(['name', 'balance'])
+        for i in range(len(allHolder)):
+            writer.writerow([allHolder[i].name, allHolder[i].balance])
+
+
+def writeLoan():
+    writefile1 = 'laons.csv'
+    with open(writefile1, 'w') as file1:
+        writer = csv.writer(file1)
+        writer.writerow['prinincple', ]
+
+
+def loadLoan():
+    filename = 'loans.csv'
+    with open(filename) as file:
+        reader = csv.reader(file)
+        header_row = next(reader)
+        for row in reader:
+            allLoan.append(Loan(row[0], row[1], row))
 
 
 def makePlot(x, y):
@@ -56,8 +87,16 @@ def makePlot(x, y):
 def main():
     loadHolder()
     while True:
-        firstInput = input('''What do you want to do? 
-        1. Add Holder 2. View Holders 3. Deposit 4. Withdraw 5. Add loan 6. View Loans 9. Delete Holder 0. Quit\n>''')
+        firstInput = input('''What do you want to do?
+1. Add Holder
+2. View Holders
+3. Deposit
+4. Withdraw
+5. Add loan
+6. View Loans
+9. Delete Holder
+0. Quit
+> ''')
         if firstInput == '1':
             holderNameInput = input('Enter Holder name: ')
             startBalInput = float(input('Enter starting balance: '))
@@ -93,25 +132,28 @@ def main():
                         screen4Run = False
                         break
         elif firstInput == '5':
-            principleInput = input('Principle: ')
-            termLoadInput = int(input('Term of loan'))
-            allLoan.append(Loan(principleInput, termLoadInput))
-            print(allLoan)
+            principleInput = input('Principle (Name of item to borrow): ')
+            termLoanInput = int(input('Term of loan (How many days): '))
+            interestInput = input('Interest: ')
+            InterestAmountInput = int(input('Interest Quantities: '))
+            faceValueInput = int(input('Face Value (Value of item to borrow): '))
+            allLoan.append(Loan(principleInput, termLoanInput, interestInput, InterestAmountInput, faceValueInput))
+            for loan in allLoan:
+                print('''Name of item you loan: {}
+Due date: {}
+Nominal Yield: {}'''.format(loan.principle, loan.maturityDate, loan.nominalYield))
+        elif firstInput == '6':
+            printLoanList()
         elif firstInput == '9':
-            screen8Run = True
-            while screen8Run:
+            screen9Run = True
+            while screen9Run:
                 printHolderList()
                 delHolderInput = int(input('Holder\n>'))
                 if delHolderInput - 1 in range(len(allHolder)):
                     del allHolder[delHolderInput - 1]
-                    screen8Run = False
+                    screen9Run = False
         elif firstInput == '0':
-            writefile1 = 'holders.csv'
-            with open(writefile1, 'w') as file1:
-                writer = csv.writer(file1)
-                writer.writerow(['name', 'balance'])
-                for i in range(len(allHolder)):
-                    writer.writerow([allHolder[i].name, allHolder[i].balance])
+            writeHolder()
             name, bal = [], []
             for i in range(len(allHolder)):
                 name.append(allHolder[i].name)
@@ -121,3 +163,4 @@ def main():
 
 
 main()
+
