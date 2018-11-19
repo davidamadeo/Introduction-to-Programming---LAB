@@ -23,9 +23,9 @@ class Loan:
         self.termLoan = int(termLoan)
         self.maturityDate = self.startingDate + timedelta(days=termLoan)
         self.interestName = interest
-        self.interestRate = interestAmount
+        self.interestAmount = interestAmount
         self.faceValue = faceValue
-        self.nominalYield = (self.interestRate / self.faceValue) * 100
+        self.nominalYield = (self.interestAmount / self.faceValue) * 100
 
 
 allHolder = []
@@ -39,7 +39,8 @@ def printHolderList():
 
 def printLoanList():
     for i in range(len(allLoan)):
-        print(i + 1, allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate, allLoan[i].interest, allLoan[i].interestAmount, allLoan[i].faceValue, allLoan[i].nominalYield)
+        print(i + 1, allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate,
+              allLoan[i].interestName, allLoan[i].interestAmount, allLoan[i].faceValue, allLoan[i].nominalYield)
 
 
 def loadHolder():
@@ -61,12 +62,14 @@ def writeHolder():
 
 
 def writeLoan():
-    writefile1 = 'laons.csv'
+    writefile1 = 'loans.csv'
     with open(writefile1, 'w') as file1:
         writer = csv.writer(file1)
-        writer.writerow['prinincple', 'maturity date', 'interst', 'interest amount', 'face value', 'nominal yield']
+        writer.writerow(['principle', 'term loan', 'maturity date', 'interest',
+                         'interest amount', 'face value', 'nominal yield'])
         for i in range(len(allLoan)):
-            writer.writerowp[allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate, allLoan[i].interest, allLoan[i].interestAmount, allLoan[i].faceValue, allLoan[i].nominalYield]
+            writer.writerow([allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate,
+                             allLoan[i].interestName, allLoan[i].interestAmount, allLoan[i].faceValue, allLoan[i].nominalYield])
 
 
 def loadLoan():
@@ -75,7 +78,7 @@ def loadLoan():
         reader = csv.reader(file)
         header_row = next(reader)
         for row in reader:
-            allLoan.append(Loan(row[0], row[1], row))
+            allLoan.append(Loan(row[0], row[1], str(row[2]), row[3], row[4]))
 
 
 def makePlot(x, y):
@@ -88,6 +91,7 @@ def makePlot(x, y):
 
 def main():
     loadHolder()
+    loadLoan()
     while True:
         firstInput = input('''What do you want to do?
 1. Add Holder
@@ -139,11 +143,12 @@ def main():
             interestInput = input('Interest: ')
             InterestAmountInput = int(input('Interest Quantities: '))
             faceValueInput = int(input('Face Value (Value of item to borrow): '))
-            allLoan.append(Loan(principleInput, termLoanInput, interestInput, InterestAmountInput, faceValueInput))
+            allLoan.append(Loan(principleInput, termLoanInput, interestInput,
+                                InterestAmountInput, faceValueInput))
             for loan in allLoan:
                 print('''Name of item you loan: {}
 Due date: {}
-Nominal Yield: {}'''.format(loan.principle, loan.maturityDate, loan.nominalYield))
+Nominal Yield: {}%'''.format(loan.principle, loan.maturityDate, loan.nominalYield))
         elif firstInput == '6':
             printLoanList()
         elif firstInput == '9':
@@ -156,6 +161,7 @@ Nominal Yield: {}'''.format(loan.principle, loan.maturityDate, loan.nominalYield
                     screen9Run = False
         elif firstInput == '0':
             writeHolder()
+            writeLoan()
             name, bal = [], []
             for i in range(len(allHolder)):
                 name.append(allHolder[i].name)
