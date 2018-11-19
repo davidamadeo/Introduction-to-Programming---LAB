@@ -64,7 +64,9 @@ def writeLoan():
     writefile1 = 'laons.csv'
     with open(writefile1, 'w') as file1:
         writer = csv.writer(file1)
-        writer.writerow['prinincple', ]
+        writer.writerow['prinincple', 'maturity date', 'interst', 'interest amount', 'face value', 'nominal yield']
+        for i in range(len(allLoan)):
+            writer.writerowp[allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate, allLoan[i].interest, allLoan[i].interestAmount, allLoan[i].faceValue, allLoan[i].nominalYield]
 
 
 def loadLoan():
