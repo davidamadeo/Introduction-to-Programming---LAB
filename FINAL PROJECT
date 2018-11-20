@@ -90,7 +90,7 @@ def writeLoan():  # create a function to write data into a Loan csv file
 
 
 def makePlot(x, y):  # create a function to make a graph using API matplotlib with parameters x and y
-    plt.figure(dpi=100, figsize=(12, 6))  # create the figure for the graph. size of the window is a 100dpi and the
+    plt.figure(dpi=60, figsize=(12, 6))  # create the figure for the graph. size of the window is a 100dpi and the
     # figure size is 12, 6 (x, y)
     plt.bar(x, y, width=1, color='red', edgecolor='yellow')  # create a bar chart with red colour and yellow edge
     # colour, with width = 1
