@@ -172,7 +172,7 @@ def main():  # create function main()
                                 InterestAmountInput, faceValueInput))  # append all the user inputs into the list
             # allLoan
             for loan in allLoan:  # for the loan in the list allLoan
-                print('''Name of item you loan: {}
+                print('''Principle: {}
 Maturity date: {}
 Nominal Yield: {}%'''.format(loan.principle, loan.maturityDate, loan.nominalYield))  # print out the principle,
         # maturity date, nominal yield
