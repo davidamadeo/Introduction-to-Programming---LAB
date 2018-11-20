@@ -112,6 +112,7 @@ def main():  # create function main()
 4. Withdraw
 5. Add loan
 6. View Loans
+8. Delete Loan
 9. Delete Holder
 0. Quit
 > ''')  # user input
