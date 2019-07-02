@@ -1,0 +1,214 @@
+from matplotlib import pyplot as plt  # import pyplot from matplotlib
+import csv  # import csv
+from datetime import datetime as dt  # import datetime
+from datetime import timedelta  # import timedelta from datetime
+
+
+class Holder:  # create a class called Holder
+    def __init__(self, name, startBal=0.0):  # initialize the class with parameters name, and startBal as starting
+        # balance with value 0
+        self.name = name
+        self.balance = float(startBal)  # let the starting balance be a float so it can have decimal places
+
+    def deduct(self, num):  # function to deduct with parameter num
+        self.balance -= float(num)  # user will input value num and subtract the num to the balance
+
+    def add(self, num):  # function to add with parameter num
+        self.balance += float(num)  # user will input value num and add the num to the balance
+
+
+class Loan:  # create a class called Loan
+    def __init__(self, principle, termLoan, interest, interestAmount, faceValue):
+        self.principle = principle
+        self.startingDate = dt.strptime(dt.strftime(dt.now(), '%Y-%m-%d'), '%Y-%m-%d')  # set a starting date with format YYYY-MM-DD as of the time code is being run
+        self.termLoan = int(termLoan)
+        self.maturityDate = self.startingDate + timedelta(days=self.termLoan)  # maturity date will be the term loan added to the starting date (term loan as days)
+        self.interestName = interest
+        self.interestAmount = interestAmount
+        self.faceValue = faceValue
+        self.nominalYield = (int(self.interestAmount) / int(self.faceValue)) * 100  # calculating nominal yield
+
+
+allHolder = []  # initialize empty list for allHolder to store different holders
+allLoan = []  # initialize empty list for allLoan to store different loans
+
+
+def printHolderList():  # function to print all the holders in allHolder
+    for i in range(len(allHolder)):  # for i in the number of holders in allHolder
+        print(i + 1, allHolder[i].name, allHolder[
+            i].balance)  # print i added by one, the name and the balance of the holder in the current index i
+
+
+def printLoanList():  # function to print all the loans in allLoans
+    for i in range(len(allLoan)):  # for i in the number of loans in allLoan
+        print(i + 1, allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate,
+              allLoan[i].interestName, allLoan[i].interestAmount, allLoan[i].faceValue, allLoan[i].nominalYield)
+
+
+# print i added by one, the principle, term loan, maturity date, interest, interest amount, face value and nominal yield of the loan in the current index i
+
+
+def loadHolder():  # create a function to load the Holder csv file
+    filename = 'holders.csv'  # the filename is holders.csv
+    with open(filename) as file:  # assign the open file of the holders.csv as file
+        reader = csv.reader(file)  # read the holders.csv file as reader
+        header_row = next(reader)  # read the data below the header
+        for row in reader:  # for the row in reader
+            allHolder.append(Holder(row[0], row[1]))  # add the name and balance of the holders into the list allHolder
+
+
+def writeHolder():  # create a function to write data into a Holder csv file
+    writefile1 = 'holders.csv'  # the name of the csv file is holders.csv
+    with open(writefile1, 'w') as file1:  # assign the open file of the holders.csv as file1
+        writer = csv.writer(file1)
+        writer.writerow(['name', 'balance'])  # write as the headings in the top row as shown
+        for i in range(len(allHolder)):  # for i in length of allHolder
+            writer.writerow([allHolder[i].name, allHolder[i].balance])  # write on each row as shown
+
+
+def loadLoan():  # create a function to load the Loan csv file
+    filename = 'loans.csv'  # the filename is loans.csv
+    with open(filename) as file:  # assign the open file of the loans.csv as file
+        reader = csv.reader(file)  # read the loans.csv file as reader
+        header_row = next(reader)
+        for row in reader:  # for row in reader
+            allLoan.append(Loan(row[0], row[1], row[3], row[4], row[5]))
+
+
+def writeLoan():  # create a function to write data into a Loan csv file
+    writefile1 = 'loans.csv'  # the name of the file is loans.csv
+    with open(writefile1, 'w') as file1:
+        writer = csv.writer(file1)
+        writer.writerow(['principle', 'term loan', 'maturity date', 'interest',
+                         'interest amount', 'face value', 'nominal yield'])  # write as the headings in the top row
+        # as shown
+        for i in range(len(allLoan)):  # for i in range of the length of allLoan
+            writer.writerow([allLoan[i].principle, allLoan[i].termLoan, allLoan[i].maturityDate,
+                             allLoan[i].interestName, allLoan[i].interestAmount, allLoan[i].faceValue,
+                             allLoan[i].nominalYield])
+            # write on each row as shown
+
+
+def makePlot(x, y):  # create a function to make a graph using API matplotlib with parameters x and y
+    plt.figure(dpi=60, figsize=(12, 6))  # create the figure for the graph. size of the window is a 100dpi and the
+    # figure size is 12, 6 (x, y)
+    plt.bar(x, y, width=1, color='red', edgecolor='yellow')  # create a bar chart with red colour and yellow edge
+    # colour, with width = 1
+    plt.title('Balance', fontsize=24)  # create a title 'Balance' with the font size of 24
+    plt.tick_params(labelsize=8)
+    plt.show()  # show the graph
+
+
+def main():  # create function main()
+
+    loadHolder()  # call the function to load the holders.csv file
+    loadLoan()  # call the function to load the loans.csv file
+
+    while True:  # to create a loop
+        firstInput = input('''What do you want to do?
+1. Add Holder
+2. View Holders
+3. Deposit
+4. Withdraw
+5. Add loan
+6. View Loans
+8. Delete Loan
+9. Delete Holder
+0. Quit
+> ''')  # user input
+        
+        if firstInput == '1':  # if the user inputs 1
+            holderNameInput = input('Enter Holder name: ')  # user inputs holder name
+            startBalInput = float(input('Enter starting balance: '))  # user inputs starting balance
+            allHolder.append(Holder(holderNameInput, startBalInput))  # add the name and balance to the list
+
+        elif firstInput == '2':  # if the user inputs 2
+            printHolderList()  # call function printHolderList()
+
+        elif firstInput == '3':  # if the user inputs 3
+            screen3Run = True  # assign screen3Run as True
+            while screen3Run:  # creates a loop
+                print('Choose account')  # choose the account number
+                printHolderList()  # calls the function to print all the holders
+                chooseHolderInput = input('> ')  # input the account number
+                for i in range(len(allHolder)):  # for i in the length of allHolder
+                    if int(chooseHolderInput) - 1 in range(len(allHolder)):  # if the input account number minus by 1
+                        #  is in the length of allHolder
+                        workingHolder = allHolder[int(chooseHolderInput) - 1]  # we work with the holder of the index
+                        #  in the list of allHolders
+                        numInput = float(input('Amount: '))  # input amount to be deposited
+                        workingHolder.add(numInput)  # call function of add with the input amount with the holder
+                        print('Balance: {}'.format(workingHolder.balance))  # print out the balance of the holder
+                        # we're working with
+                        screen3Run = False  # screen3Run becomes False
+                        break  # stops the loop
+
+        elif firstInput == '4':  # if the user input 4
+            screen4Run = True  # assign screen4Run as True
+            while screen4Run:  # creates a loop
+                print('Choose account')  # choose the account number
+                printHolderList()  # calls the function printHolderList()
+                chooseHolderInput = input('> ')  # input s the account number
+                for i in range(len(allHolder)):  # for i in length of allHolder
+                    if int(chooseHolderInput) - 1 in range(len(allHolder)):  # if the input account number minus by 1
+                        #  is in the length of allHolder
+                        workingHolder = allHolder[int(chooseHolderInput) - 1]  # we work with the holder of the index
+                        #  in the list of allHolders
+                        numInput = float(input('Amount: '))  # input amount to be withdrawn
+                        workingHolder.deduct(numInput)  # call function of deduct with the input amount with the holder
+                        print('Balance: {}'.format(workingHolder.balance))  # print out the balance of the holder
+                        # we're working with
+                        screen4Run = False  # screen4Run becomes False
+                        break  # stops the loop
+
+        elif firstInput == '5':  # if user inputs 5
+            principleInput = input('Principle (Name of item to borrow): ')  # ask user to input the principle
+            termLoanInput = int(input('Term of loan (How many days): '))  # ask the user to input the term of loan
+            interestInput = input('Interest: ')  # ask user to input the interest
+            InterestAmountInput = int(input('Interest Quantities: '))  # ask user to input the amount of interest
+            faceValueInput = int(input('Face Value (Value of item to borrow): '))  # ask the user to input the face
+            # value
+            allLoan.append(Loan(principleInput, termLoanInput, interestInput,
+                                InterestAmountInput, faceValueInput))  # append all the user inputs into the list
+            # allLoan
+            for loan in allLoan:  # for the loan in the list allLoan
+                print('''Principle: {}
+Maturity date: {}
+Nominal Yield: {}%'''.format(loan.principle, loan.maturityDate, loan.nominalYield))  # print out the principle,
+        # maturity date, nominal yield
+
+        elif firstInput == '6':  # if the user inputs 6
+            printLoanList()  # call the function printLoanList()
+
+        elif firstInput == '8':  # if the user inputs 8
+            screen8Run = True  # assign screen8Run as True
+            while screen8Run:  # creates a loop
+                printLoanList()  # calls the function printLoanList()
+                delLoanInput = int(input('Holder\n>'))  # user inputs loan the that wants to be deleted
+                if delLoanInput - 1 in range(len(allLoan)):  # if the user input minus by 1 is in the length of allLoan
+                    del allLoan[delLoanInput - 1]  # delete the loan
+                    screen8Run = False  # screen8Run becomes False
+
+        elif firstInput == '9':  # if the user inputs 9
+            screen9Run = True  # assign screen9Run as True
+            while screen9Run:  # creates a loop
+                printHolderList()  # call the function printLoanList()
+                delHolderInput = int(input('Holder\n>'))  # user inputs holder the that wants to be deleted
+                if delHolderInput - 1 in range(len(allHolder)):  # if the user input minus by 1 is in the length of
+                    # allHolder
+                    del allHolder[delHolderInput - 1]  # delete the holder
+                    screen9Run = False  # screen9Run becomes False
+
+        elif firstInput == '0':  # if the user inputs 0
+            writeHolder()  # call the function to write data into the holders.csv
+            writeLoan()  # call the function to write data into the loans.csv
+            name, bal = [], []  # initialize the list for name and balance as empty
+            for i in range(len(allHolder)):  # for i in the length of allHolder
+                name.append(allHolder[i].name)  # add the name on the holder of the current index i into the name list
+                bal.append(allHolder[i].balance)  # add the balance on the holder of the current index i into the
+                # balance list
+            makePlot(name, bal)  # call the function with name as x-axis and balance as y-axis
+            exit()  # exit the system
+
+
+main()  # call the function main()
